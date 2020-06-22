@@ -8,11 +8,11 @@ label:
 container:
   name: mnenntestweb-container
   pullPolicy: IfNotPresent
-  image: mnenn-kub
+  image: mnenntestwebapp-dev
   tag: v1
   port: 80
 
-replicas: 3
+replicas: 1
 
 service:
   port: 5004
