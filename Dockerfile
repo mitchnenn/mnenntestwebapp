@@ -7,10 +7,15 @@ RUN dotnet restore
 
 # Copy everything else and build
 COPY . ./
-RUN dotnet publish -c Release -o out
+RUN dotnet publish -c Debug -o out
 
 # Build runtime image
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
+FROM mnennillumina/dotnet-debug-container:1.0
 WORKDIR /app
+
 COPY --from=build-env /app/out .
-ENTRYPOINT ["dotnet", "MnennTestWebApp.dll"]
+
+COPY ./StartSSHAndApp.sh .
+RUN chmod +x StartSSHAndApp.sh
+
+ENTRYPOINT ["/app/StartSSHAndApp.sh"]
